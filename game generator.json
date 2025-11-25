@@ -1,0 +1,118 @@
+{
+  "name": "game generator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "2323bb11-348e-4d84-9825-e1c08be39984",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8a7109df-f6a9-4763-baf3-0398af73e15f",
+      "name": "Webhook",
+      "webhookId": "2323bb11-348e-4d84-9825-e1c08be39984"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create the following pygame game:\n\nGame name:{{ $json.body.game }}\n\nInstructions:\n- Understand the real gameplay based on the game name.\n- Make sure the visual style matches the real game.\n- Player must move correctly (arrow keys or WASD).\n- Add enemies or obstacles matching the game type.\n- Add scoring.\n- Add collision detection.\n- Add game over screen.\n- Window size: 600x600 or suitable for gameplay.\n- Do not generate placeholders unless the real game uses blocks.\n- Do NOT add explanations.\n- Do NOT add comments.\n- Output ONLY the Python code.\n\n\n\n\n",
+        "options": {
+          "systemMessage": "=You are an expert Python game developer with 20 years of experience.\nYour job is to generate complete, fully playable 2D games using pygame.\n\nRules:\n- Always generate the correct game for the given game name.\n- Always include real graphics: real movement, enemies/obstacles, score, collisions, and game over.\n- Never generate placeholder boxes unless the real game uses them.\n- Never generate Streamlit code.\n- Never generate markdown or backticks.\n- Always output ONLY pure Python code.\n- Code must run without errors.\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "612c3f6c-b3a1-4409-8d62-fb9af718c3b9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "f75061c1-8d96-478f-9cdf-f8ffa4cb2e59",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4ZQs0IBHxSUG9XQx",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        560,
+        0
+      ],
+      "id": "736828fe-bb48-4464-880a-ee38139a424a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7b072d0f-ec0b-4a01-a5cc-6f063e83c289",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "973f63faf7057da281fd1bde3a0f115cbfb54dfb38a1b4f9227bb1910fa5726a"
+  },
+  "id": "typakyGCkjnApwc7",
+  "tags": []
+}
