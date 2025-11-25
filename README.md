@@ -96,4 +96,4 @@ n8n-auto-game-generator/
 Chakravardhan Ramannagari
 AI • Automation • Python Developer
 
-LinkedIn: https://linkedin.com/in/chakravardhan06
+LinkedIn:[ https://linkedin.com/in/chakravardhan06](https://www.linkedin.com/in/ramannagarichakravardhan/)
